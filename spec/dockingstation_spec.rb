@@ -14,7 +14,18 @@ describe DockingStation do
         subject = DockingStation.new(18, 20)
         expect(subject.release_bike).to be_kind_of(Bike)
       end
+
+      it 'releases a working bike' do
+        subject = DockingStation.new(0, 20)
+        broken_bike = Bike.new(false)
+        working_bike = Bike.new(true)
+        subject.dock(broken_bike)
+        subject.dock(working_bike)
+        expect(subject.release_bike).to eq (working_bike)
+      end
     end
+
+
 
     describe '#release_bike' do
       it 'raises an error when there are no bikes available' do
@@ -22,6 +33,7 @@ describe DockingStation do
         expect { subject.release_bike }.to raise_error 'No bikes available'
       end
     end
+
 
   end
 

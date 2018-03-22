@@ -18,10 +18,10 @@ class DockingStation
   end
 
   def release_bike
-    if empty?
+    if empty? || !@bike_storage.any? {|bike| bike.working?}
       raise 'No bikes available'
     else
-      @bike_storage.sample
+      @bike_storage.delete_at(@bike_storage.index {|bike| bike.working? })  
     end
   end
 
