@@ -5,16 +5,23 @@ class DockingStation
   attr_reader :capacity
   DEFAULT_CAPACITY = 20
 
-  def initialize
+  def initialize(num_of_bikes = nil, initial_capacity = DEFAULT_CAPACITY)
+    @capacity = initial_capacity
     @bike_storage = []
-    @capacity = DEFAULT_CAPACITY
+
+    if num_of_bikes.nil?
+      DEFAULT_CAPACITY.times { @bike_storage << Bike.new }
+    else
+      num_of_bikes.times { @bike_storage << Bike.new }
+    end
+
   end
 
   def release_bike
     if empty?
       raise 'No bikes available'
     else
-      @bike_storage.pop
+      @bike_storage.sample
     end
   end
 
